@@ -4,7 +4,6 @@ variable "region" {
 }
 variable "profile" {
   description = "AWS IAM Profile"
-  default = "terraform_iam_user"
 }
 
 /*
@@ -12,5 +11,5 @@ variable "profile" {
 # Edite para a chave pública do seu usuário
 variable "key_path" {
   description = "Public key path"
-  default = "./security/keys/MyKeyPair.pub"
+  default = "./security/keys/key.pub"
 }*/
