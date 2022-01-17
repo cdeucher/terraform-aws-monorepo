@@ -5,13 +5,11 @@ variable vpc_id {
 
 variable profile {
   type        = string
-  default     = "terraform_iam_user"
   description = "AWS Profile"
 }
 
 variable key_name {
   type        = string
-  default     = "MyKeyPair.pem.pub"
   description = "Key Pair Name"
 }
 
