@@ -1,1 +1,6 @@
 **/*.tfstate
+**/*.tfstate.*
+.DS_Store
+**/.terraform/**
+**.terraform*
+**/lambda_edge_origin_response.zip
