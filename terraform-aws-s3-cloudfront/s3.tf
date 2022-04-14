@@ -56,8 +56,13 @@ resource "aws_s3_bucket_object" "static_sync" {
   content_type = "%{ if contains(["jpeg", ".jpg"], strrev(substr(strrev(each.value), 0, 4))) }image/jpeg%{ endif }%{ if contains(["png"], strrev(substr(strrev(each.value), 0, 3))) }image/png%{ endif }%{ if contains(["json"], strrev(substr(strrev(each.value), 0, 4))) }application/json%{ endif }%{ if contains(["apple-app-site-association"], strrev(substr(strrev(each.value), 0, 26))) }application/json%{ endif }%{ if contains(["html"], strrev(substr(strrev(each.value), 0, 4))) }text/html%{ endif }%{ if contains(["js"], strrev(substr(strrev(each.value), 0, 2))) }text/javascript%{ endif }%{ if contains(["css"], strrev(substr(strrev(each.value), 0, 3))) }text/css%{ endif }%{ if contains(["csv"], strrev(substr(strrev(each.value), 0, 3))) }text/csv%{ endif }"
 }
 
-resource "aws_s3_bucket_object" "source" {
+resource "aws_s3_bucket_object" "current" {
   bucket = aws_s3_bucket.devops_app_bucket.id
   content_type = "application/x-directory"
-  key    = "futuro/"
+  key    = "current/"
+}
+resource "aws_s3_bucket_object" "next" {
+  bucket = aws_s3_bucket.devops_app_bucket.id
+  content_type = "application/x-directory"
+  key    = "next/"
 }

@@ -17,7 +17,7 @@ resource "aws_cloudfront_distribution" "devops_app_cf_distribution" {
   origin {
     domain_name = aws_s3_bucket.devops_app_bucket.bucket_regional_domain_name
     origin_id   = local.s3_origin_id
-    origin_path = "/futuro"
+    origin_path = "/current"
 
     s3_origin_config {
       origin_access_identity = aws_cloudfront_origin_access_identity.devops_app_access_identity.cloudfront_access_identity_path
