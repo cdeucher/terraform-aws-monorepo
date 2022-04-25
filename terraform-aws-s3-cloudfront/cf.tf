@@ -30,10 +30,10 @@ resource "aws_cloudfront_distribution" "devops_app_cf_distribution" {
 
   aliases = [
     lookup({
-      dev = "app.${local.domain_name}",
-      dev2 = "app-dev.${local.domain_name}",
-      stg = "app-staging.${local.domain_name}"
-    }, var.env_name, "app-portal.${local.domain_name}")
+      dev = "dash.${local.domain_name}",
+      dev2 = "dash-dev.${local.domain_name}",
+      stg = "dash-staging.${local.domain_name}"
+    }, var.env_name, "dash-portal.${local.domain_name}")
   ]
 
   default_cache_behavior {
@@ -47,10 +47,13 @@ resource "aws_cloudfront_distribution" "devops_app_cf_distribution" {
     compress               = true
 
     forwarded_values {
-      query_string = false
+      headers                 = ["all"]
+      query_string            = true
+      query_string_cache_keys = []
 
       cookies {
-        forward = "none"
+        forward           = "all"
+        whitelisted_names = []
       }
     }
 
@@ -74,7 +77,7 @@ resource "aws_cloudfront_distribution" "devops_app_cf_distribution" {
     viewer_protocol_policy = "redirect-to-https"
 
     forwarded_values {
-      headers                 = []
+      headers                 = ["all"]
       query_string            = true
       query_string_cache_keys = []
 

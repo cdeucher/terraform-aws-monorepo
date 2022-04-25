@@ -5,9 +5,10 @@ data "aws_route53_zone" "zone" {
 resource "aws_route53_record" "www-a" {
   zone_id = "${data.aws_route53_zone.zone.zone_id}"
   name    = lookup({
-      dev = "app.${local.domain_name}",
-      stg = "app-staging.${local.domain_name}"
-    }, var.env_name, "app-portal.${local.domain_name}")  
+      dev = "dash.${local.domain_name}",
+      dev2 = "dash-dev.${local.domain_name}",
+      stg = "dash-staging.${local.domain_name}"
+    }, var.env_name, "dash-portal.${local.domain_name}") 
   type    = "A"
 
   alias {

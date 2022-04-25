@@ -32,6 +32,7 @@ exports.handler = (event, context, callback) => {
 			"'self'",
 			'data:',
 			'*.cabd.link',
+			'*.cloudfront.net',
 			'www.google-analytics.com',
 			'https://analytics.conpass.io/v2/',
 			'https://stats.g.doubleclick.net',
@@ -43,12 +44,14 @@ exports.handler = (event, context, callback) => {
 			"'unsafe-inline'",
 			'*.cabd.link',
 			'fonts.googleapis.com',
+			'*.cloudfront.net',
 
 		],
 		'media-src': [
 			"'self'",
 			'*.cabd.link',
 			'https://*.youtube.com',
+			'*.cloudfront.net',
 		],
 		'script-src': [
 			"'self'",
@@ -59,6 +62,7 @@ exports.handler = (event, context, callback) => {
 			'www.google-analytics.com',
 			'storage.googleapis.com',
 			'*.cabd.link',
+			'*.cloudfront.net',
 		],
 		'script-src-elem': [
 			"'self'",
@@ -68,19 +72,23 @@ exports.handler = (event, context, callback) => {
 			'www.google-analytics.com',
 			'storage.googleapis.com',
 			'*.cabd.link',
+			'*.cloudfront.net',
 		],
 		'prefetch-src': [
 			"'self'",
 			'*.cabd.link',
+			'*.cloudfront.net',
 		],
 		'frame-ancestors': [
 			"'self'",
 			'*.cabd.link',
+			'*.cloudfront.net',
 		],
 		'frame-src': [
 			"'self'",
 			'*.cabd.link',
 			'https://*.youtube.com',
+			'*.cloudfront.net',
 		],
 		'form-action': [
 			"'self'",
