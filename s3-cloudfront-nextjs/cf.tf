@@ -6,7 +6,8 @@ data "aws_acm_certificate" "acm_certificate" {
 
 resource "aws_cloudfront_distribution" "devops_app_cf_distribution" {
   origin {
-    domain_name = aws_s3_bucket.devops_app_bucket.website_endpoint
+    # domain_name = aws_s3_bucket.devops_app_bucket.website_endpoint
+    domain_name = aws_s3_bucket.devops_app_bucket.bucket_regional_domain_name
     origin_id   = local.s3_origin_id
 
     custom_origin_config {

@@ -1,8 +1,7 @@
 resource "aws_s3_bucket" "devops_app_bucket" {
   bucket = "devops-app-bucket-${var.env_name}"
   acl    = "public-read"
-  #policy = templatefile("templates/policies/s3-policy.json", { bucket = "devops-app-bucket-${var.env_name}" })
-
+  
   website {
     index_document = "index.html"
     error_document = "index.html"
@@ -17,28 +16,36 @@ resource "aws_s3_bucket" "devops_app_bucket" {
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "access_block" {
+resource "aws_s3_bucket_public_access_block" "devops_app_access_block" {
   bucket = aws_s3_bucket.devops_app_bucket.id
 
-  block_public_acls       = true
-  block_public_policy     = true
-  restrict_public_buckets = true
-  ignore_public_acls      = true
+  block_public_acls       = false
+  block_public_policy     = false
+  restrict_public_buckets = false
+  ignore_public_acls      = false
 }
 
-data "aws_iam_policy_document" "policy_document" {
+resource "aws_s3_bucket_ownership_controls" "website_controls" {
+  bucket = aws_s3_bucket.devops_app_bucket.id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+data "aws_iam_policy_document" "devops_app_policy_document" {
   statement {
     actions   = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.devops_app_bucket.arn}/*"]
 
     principals {
       type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.devops_app_access_identity.iam_arn]
+      identifiers = ["*"]
     }
   }
 }
 
-resource "aws_s3_bucket_policy" "bucket_policy" {
+resource "aws_s3_bucket_policy" "devops_app_bucket_policy" {
   bucket = aws_s3_bucket.devops_app_bucket.id
-  policy = data.aws_iam_policy_document.policy_document.json
+  policy = data.aws_iam_policy_document.devops_app_policy_document.json
 }
