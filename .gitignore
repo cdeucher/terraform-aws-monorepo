@@ -4,3 +4,4 @@
 **/.terraform/**
 **.terraform*
 **/lambda_edge_origin_response.zip
+**/.idea

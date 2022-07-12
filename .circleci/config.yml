@@ -1,0 +1,70 @@
+---
+version: 2.1
+
+orbs:
+  terraform: circleci/terraform@3.1.0
+
+executors:
+  node-minor:
+    docker:
+      - image: cimg/node:14.19.1
+    resource_class: small
+    working_directory: ~/workspace
+
+references:
+  restore_source_cache: &restore_source_cache
+    restore_cache:
+      keys:
+        - source-{{ .Branch }}-{{ .Revision }}
+
+commands:
+  restore-source-checksum-cache:
+    description: "This command will restore the source code from cache"
+    steps:
+      - *restore_source_cache
+      - run: git checkout -- .
+
+jobs:
+  bootstrap:
+    executor: node-minor
+    steps:
+      - checkout
+      - run: git gc
+      - save_cache:
+          key: source-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - '.git'
+
+  code-validate:
+    executor: node-minor
+    steps:
+      - restore-source-checksum-cache
+      - terraform/install:
+          arch: amd64
+          os: linux
+          terraform_version: 0.14.5
+      - run:
+          name: Changes
+          command: |
+            for project in $(find . -maxdepth 1 -mindepth 1 -type d -name "[a-z]*") ; do
+              echo "${project}"
+              cd "${project}" && terraform init && terraform validate && cd ..
+            done
+
+push-filters: &push-filters
+  branches:
+    only:
+      - develop
+      - master
+      - /^feature\/.*/
+
+workflows:
+  version: 2
+  commit-workflow:
+    jobs:
+      - bootstrap:
+          filters: *push-filters
+      - code-validate:
+          requires:
+            - bootstrap
+          filters: *push-filters
