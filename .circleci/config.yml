@@ -1,0 +1,61 @@
+---
+version: 2.1
+
+orbs:
+  terraform: circleci/terraform@3.1.0
+
+executors:
+  node-minor:
+    docker:
+      - image: cimg/node:14.19.1
+    resource_class: small
+    working_directory: ~/workspace
+
+references:
+  restore_source_cache: &restore_source_cache
+    restore_cache:
+      keys:
+        - source-{{ .Branch }}-{{ .Revision }}
+
+jobs:
+  bootstrap:
+    executor: node-minor
+    steps:
+      - checkout
+      - run: git gc
+      - save_cache:
+          key: source-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - '.git'
+
+  code-validate:
+    executor: node-minor
+    steps:
+      - *restore_source_cache
+      - terraform/install:
+          arch: amd64
+          os: linux
+          terraform_version: 0.14.5
+      - run:
+          name: Changes
+          command: |
+            for project in $(ls -l) ; do
+              cd "${project}"
+              terraform validate
+            done
+
+push-filters: &push-filters
+  branches:
+    only:
+      - .*
+
+workflows:
+  version: 2
+  commit-workflow:
+    jobs:
+      - bootstrap:
+          filters: *push-filters
+      - code-validate:
+          requires:
+            - bootstrap
+          filters: *push-filters
