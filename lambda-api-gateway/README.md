@@ -10,7 +10,7 @@
 ### Example
 
 ```bash
-curl -XPOST 'https://xxx.amazonaws.com/main/users' \
--d '{"userId": "4","name":"Item 04"}' \
+curl -XPOST 'https://xxx.amazonaws.com/main/titles' \
+-d  '{"text": "mushoku","price":"20.01","symbol":"R$","url":"localhost","type":"kindle"}' \
 -H 'Content-Type: application/json'
 ```
