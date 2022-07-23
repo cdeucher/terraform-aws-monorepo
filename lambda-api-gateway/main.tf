@@ -1,6 +1,7 @@
 module "dynamodb" {
   source = "./dynamodb"
   table_name = var.tabe_name
+  attributes = var.dynamodb_attributes
 }
 
 module "lambda" {
@@ -12,8 +13,8 @@ module "lambda" {
 module "apigateway" {
   source = "./apigateway"
 
-  lambda_adduser_invokearn    = module.lambda.lambda_adduser_invokearn
-  adduser_function_name       = module.lambda.adduser_function_name
+  lambda_addtitle_invokearn    = module.lambda.lambda_addtitle_invokearn
+  addtitle_function_name       = module.lambda.addtitle_function_name
   accountId                   = var.accountId
   region                      = var.region
 }
