@@ -8,13 +8,16 @@ module "lambda" {
   source = "./lambda"
   tabe_name    = var.tabe_name
   dynamodb_arn = module.dynamodb.dymanodb_arn
+  dymanodb_stream_arn = module.dynamodb.dymanodb_stream_arn
 }
 
 module "apigateway" {
   source = "./apigateway"
 
-  lambda_addtitle_invokearn    = module.lambda.lambda_addtitle_invokearn
-  addtitle_function_name       = module.lambda.addtitle_function_name
-  accountId                   = var.accountId
-  region                      = var.region
+  invoke_url                    = module.lambda.lambda_add_title_invokearn
+  add_title_function_name       = module.lambda.add_title_function_name
+  account_id                    = var.accountId
+  region                        = var.region
+  sub_domain                    = local.get_subdomain
+  domain                        = var.domain
 }

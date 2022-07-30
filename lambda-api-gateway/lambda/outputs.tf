@@ -1,6 +1,6 @@
-output "lambda_addtitle_invokearn" {
-  value = aws_lambda_function.addtitle.invoke_arn
+output "lambda_add_title_invokearn" {
+  value = aws_lambda_function.add_title.invoke_arn
 }
-output "addtitle_function_name" {
-  value = aws_lambda_function.addtitle.function_name
+output "add_title_function_name" {
+  value = aws_lambda_function.add_title.function_name
 }

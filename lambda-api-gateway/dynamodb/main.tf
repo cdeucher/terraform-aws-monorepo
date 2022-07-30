@@ -5,6 +5,8 @@ resource "aws_dynamodb_table" "dbtable" {
   write_capacity = 1
   hash_key       = var.attributes[0].name
   range_key      = var.attributes[1].name
+  stream_enabled = true
+  stream_view_type = "NEW_AND_OLD_IMAGES"
 
   dynamic "attribute" {
     for_each = var.attributes
