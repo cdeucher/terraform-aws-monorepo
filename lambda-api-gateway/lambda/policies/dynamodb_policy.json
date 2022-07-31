@@ -9,9 +9,13 @@
      "dynamodb:Scan",
      "dynamodb:BatchWriteItem",
      "dynamodb:PutItem",
-     "dynamodb:UpdateItem"
+     "dynamodb:UpdateItem",
+     "dynamodb:GetRecords",
+     "dynamodb:GetShardIterator",
+     "dynamodb:DescribeStream",
+     "dynamodb:ListStreams"
     ],
-    "Resource": "${dynamodb_arn}"
+    "Resource": ["${dynamodb_arn}","${dymanodb_stream_arn}"]
    }
   ]
 }

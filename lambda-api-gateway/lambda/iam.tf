@@ -9,7 +9,8 @@ resource "aws_iam_policy" "lambda_logging" {
   description = "IAM policy for logging from a Lambda"
 
   policy = templatefile("./lambda/policies/logs_policy.json",{
-    log_group_arn = aws_cloudwatch_log_group.log_group.arn
+    log_group_arn = aws_cloudwatch_log_group.add_title.arn
+    log_filter_arn = aws_cloudwatch_log_group.exec_filter.arn
   })
 }
 
@@ -24,6 +25,7 @@ resource "aws_iam_policy" "dynamodb_access" {
 
   policy = templatefile("./lambda/policies/dynamodb_policy.json",{
     dynamodb_arn = var.dynamodb_arn
+    dymanodb_stream_arn = var.dymanodb_stream_arn
   })
 }
 

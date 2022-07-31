@@ -1,11 +1,11 @@
-output "main_url" {
+output "subdomain" {
   description = "main_url da api"
-  value       = module.apigateway.main_url
+  value       = local.get_subdomain
 }
 output "Endpoint" {
   description = "Endpoint to invoke api"
   value       = module.apigateway.invoke_url
 }
-output "local_addtitle_url" {
-  value = module.apigateway.local_addtitle_url
+output "rest_api_url" {
+  value = module.apigateway.rest_api_url
 }
